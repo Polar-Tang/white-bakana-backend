@@ -1,12 +1,23 @@
 import mongoose from 'mongoose';
-import express from 'express';
+import express, { request } from 'express';
 import bodyParser from "body-parser"
+import cors from 'cors'
 
 
 const app = express();
 const PORT = 3000;
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.json()); 
 
-// Conectar a MongoDB
+app.use(cors({ origin: 'https://white-bakana.vercel.app/' }));  // Change this to your frontend domain
+// localhost:27017
+
+
+
+// const uri = 'http://localhost:27017';
+
+
 const uri = 'mongodb+srv://virtualnautilus:sa99L36dYUyE2nY0@cluster0.6lyks.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Conectado a MongoDB'))
@@ -23,6 +34,10 @@ const Email = mongoose.model('Email', emailSchema);
 
 // Ruta para servir el formulario
 app.get('/', (req, res) => {
+  const request =  req.body;
+
+  console.log(request)
+
   res.send(`
     <form action="/submit-email" method="POST">
       <label for="email">Email:</label>
@@ -30,12 +45,15 @@ app.get('/', (req, res) => {
       <button type="submit">Submit</button>
     </form>
   `);
+
 });
 
 // 
 // Ruta para manejar el envío del formulario
 app.post('/submit-email', (req, res) => {
   const emailData = new Email({ email: req.body.email });
+
+  console.log(req.body)
 
   emailData.save()
     .then(() => {
