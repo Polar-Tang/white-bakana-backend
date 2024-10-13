@@ -10,7 +10,10 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json()); 
 
-app.use(cors({ origin: 'https://white-bakana.vercel.app' }));  // Change this to your frontend domain
+app.use(cors({
+  origin: 'https://white-bakana.vercel.app/', // Replace this with your actual frontend URL
+  credentials: true // Optional, if you need to allow credentials (cookies, etc.)
+}));  // Change this to your frontend domain
 // localhost:27017
 
 
