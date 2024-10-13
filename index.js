@@ -5,16 +5,15 @@ import cors from 'cors'
 
 
 const app = express();
-const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json()); 
 
 app.use(cors({
-  origin: 'https://white-bakana.vercel.app/', // Replace this with your actual frontend URL
-  credentials: true // Optional, if you need to allow credentials (cookies, etc.)
-}));  // Change this to your frontend domain
-// localhost:27017
+  origin: 'https://your-frontend-url.vercel.app', // Your frontend's deployed URL
+  methods: ['GET', 'POST'], // Allow necessary methods
+  credentials: true // Enable credentials if you need them (for cookies, etc.)
+}));
 
 
 
@@ -65,9 +64,4 @@ app.post('/submit-email', (req, res) => {
     .catch(err => {
       res.status(500).send('Error al guardar el email: ' + err);
     });
-});
-
-// Iniciar el servidor
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
