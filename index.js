@@ -9,6 +9,7 @@ app.use(cors({
   origin: 'https://white-bakana.vercel.app',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'], 
+  AccessControlAllowOrigin:  'https://white-bakana.vercel.app',
   credentials: true,  
 }));
 
