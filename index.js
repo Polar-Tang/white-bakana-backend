@@ -25,6 +25,7 @@ try{
 
   err => console.error('MongoDB connection error:', err)
 
+  
 }
 
 const emailSchema = new mongoose.Schema({
@@ -38,9 +39,10 @@ app.post('/submit-email', (req, res) => {
   
   try{
     emailData.save().then(() => res.send('Email saved successfully!'))
+    
     } catch(error){
-     res.status(500).send('Error saving email: ' + err)
       console.error('Error saving email:', err);
+      res.status(500).json({ success: false, message: 'Error en el servidor' });
       if (!res.headersSent) {
         // Send error response if headers haven't been sent yet
         return res.status(500).send('Error saving email: ' + err.message);
