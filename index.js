@@ -29,9 +29,16 @@ const Email = mongoose.model('Email', emailSchema);
 app.post('/submit-email', (req, res) => {
   const emailData = new Email({ email: req.body.email });
   
-  emailData.save()
-    .then(() => res.send('Email saved successfully!'))
-    .catch(err => res.status(500).send('Error saving email: ' + err));
+  try{
+    emailData.save().then(() => res.send('Email saved successfully!'))
+    } catch(error){
+     res.status(500).send('Error saving email: ' + err)
+      console.error('Error saving email:', err);
+      if (!res.headersSent) {
+        // Send error response if headers haven't been sent yet
+        return res.status(500).send('Error saving email: ' + err.message);
+      }
+    }
 });
 
 app.options('/submit-email', cors());
