@@ -6,11 +6,11 @@ import cors from 'cors';
 
 const app = express();
 
-app.use('/submit-email', userRouter)
+app.use('submit-email', userRouter)
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const uri = process.env.MONGO_URI;  // In production, this comes from Vercel
+const uri = process.env.MONGO_URI;
 
 try{
 
