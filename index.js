@@ -36,7 +36,7 @@ const emailSchema = new mongoose.Schema({
 const Email = mongoose.model('Email', emailSchema);
 
 
-app.post('/submit-email', cors(corsOptions), (req, res) => {
+app.post('/submit-email', (req, res) => {
   const emailData = new Email({ email: req.body.email });
   
   try{
