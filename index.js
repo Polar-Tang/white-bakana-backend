@@ -5,20 +5,17 @@ import bodyParser from 'body-parser';
 
 const app = express();
 
-// CORS configuration for preflight requests (OPTIONS)
 app.use(cors({
-  origin: 'https://white-bakana.vercel.app',  // Your frontend's deployed URL
-  methods: ['GET', 'POST', 'OPTIONS'],  // Allow the methods used in your requests
-  allowedHeaders: ['Content-Type'],  // Allow headers like Content-Type
-  credentials: true,  // Allow credentials if needed
+  origin: 'https://white-bakana.vercel.app',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'], 
+  credentials: true,  
 }));
 
-// Parse incoming JSON requests
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// MongoDB connection (Atlas)
-const uri = 'your-mongodb-connection-string';
+const uri = 'mongodb+srv://virtualnautilus:sa99L36dYUyE2nY0@cluster0.6lyks.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
@@ -29,7 +26,7 @@ const emailSchema = new mongoose.Schema({
 });
 const Email = mongoose.model('Email', emailSchema);
 
-// Route to handle form submission
+
 app.post('/submit-email', (req, res) => {
   const emailData = new Email({ email: req.body.email });
   
@@ -38,8 +35,7 @@ app.post('/submit-email', (req, res) => {
     .catch(err => res.status(500).send('Error saving email: ' + err));
 });
 
-// Handle preflight requests
-app.options('/submit-email', cors());  // Handle OPTIONS request for preflight
+app.options('/submit-email', cors());
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
