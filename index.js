@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(bodyParser.json()); 
 
 app.use(cors({
-  origin: 'https://your-frontend-url.vercel.app', // Your frontend's deployed URL
+  origin: 'https://white-bakana.vercel.app/', // Your frontend's deployed URL
   methods: ['GET', 'POST'], // Allow necessary methods
   credentials: true // Enable credentials if you need them (for cookies, etc.)
 }));
@@ -55,8 +55,6 @@ app.get('/', (req, res) => {
 app.post('/submit-email', (req, res) => {
   const emailData = new Email({ email: req.body.email });
 
-  console.log(req.body)
-
   emailData.save()
     .then(() => {
       res.send('¡Email guardado con éxito!');
@@ -64,4 +62,9 @@ app.post('/submit-email', (req, res) => {
     .catch(err => {
       res.status(500).send('Error al guardar el email: ' + err);
     });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
