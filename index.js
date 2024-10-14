@@ -15,10 +15,17 @@ app.use(cors({
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+const uri = process.env.MONGO_URI;  // In production, this comes from Vercel
 
-mongoose.connect(process.env.MONGO_URI)
+try{
+
+  mongoose.connect(uri)
   .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
+} catch(err){
+
+  err => console.error('MongoDB connection error:', err)
+
+}
 
 const emailSchema = new mongoose.Schema({
   email: { type: String, required: true }
