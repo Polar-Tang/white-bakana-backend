@@ -8,6 +8,7 @@ const app = express();
 app.use(cors({
   origin: 'https://white-bakana.vercel.app',
   methods: ['GET', 'POST', 'OPTIONS'],
+  AccessControlAllowOrigin: true,
   allowedHeaders: ['Content-Type'], 
   credentials: true,  
 }));
@@ -20,7 +21,6 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Define the email schema
 const emailSchema = new mongoose.Schema({
   email: { type: String, required: true }
 });
