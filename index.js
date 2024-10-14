@@ -36,7 +36,7 @@ app.post('/submit-email', (req, res) => {
     .catch(err => res.status(500).send('Error saving email: ' + err));
 });
 
-app.options('/submit-email', cors());
+//app.options('/submit-email', cors());
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
