@@ -29,6 +29,7 @@ app.use('/submit-email', userRouter); // Asegúrate de que el router está corre
 
 // Serverless Handler para CORS
 const allowCors = fn => async (req, res) => {
+  try {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*'); // Permitir cualquier origen
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -40,12 +41,20 @@ const allowCors = fn => async (req, res) => {
   }
   
   return await fn(req, res);
+} catch (error) {
+  console.error('Error during function invocation:', error);
+  res.status(500).json({ message: 'Function invocation failed', error: error.message });
+}
 };
 
 // Si necesitas exportarlo como handler serverless
 const handler = (req, res) => {
-  const d = new Date();
-  res.end(d.toString());
+  try {
+    const d = new Date();
+    res.end(d.toString());
+  } catch (error) {
+    res.status(500).send('Error processing request');
+  }
 };
 
 module.exports = allowCors(handler); // Si estás trabajando con un entorno serverless como Vercel
