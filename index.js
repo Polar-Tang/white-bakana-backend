@@ -35,6 +35,7 @@ const emailSchema = new mongoose.Schema({
 });
 const Email = mongoose.model('Email', emailSchema);
 
+app.options('/submit-email', cors(corsOptions));
 
 app.post('/submit-email', (req, res) => {
   const emailData = new Email({ email: req.body.email });
@@ -52,7 +53,6 @@ app.post('/submit-email', (req, res) => {
     }
 });
 
-app.options('/submit-email', cors(corsOptions));
 
 
 const PORT = process.env.PORT || 3000;
