@@ -2,22 +2,20 @@
   "version": 2,
   "builds": [
     {
-      "src": "/(.*)",
+      "src": "/submit-email",
       "use": "@vercel/node" 
     }
   ],
     "routes": [
       {
         "src": "/(.*)", 
-        "dest": "/(.*)",
+        "dest": "/src/$1",
          "methods": ["GET", "POST", "OPTIONS"],
          "headers": {
           "Access-Control-Allow-Origin": "*",
-         "Access-Control-Allow-Methods": "GET, POST, OPTIONS"
+         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+         "Access-Control-Allow-Headers": "Content-Type"
          }
         }
   ]
-   
-  
-  
 }
