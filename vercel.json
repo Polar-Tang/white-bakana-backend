@@ -3,7 +3,7 @@
   "routes": [
     {
       "src": "/(.*)",    
-      "dest": "/", 
+      "dest": "/src/(.*)", 
       "methods": ["GET", "POST", "OPTIONS"], 
       "headers": {
         "Access-Control-Allow-Origin": "*",  
