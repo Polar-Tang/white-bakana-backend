@@ -1,19 +1,12 @@
 import mongoose from 'mongoose';
 import express from 'express';
-import cors from 'cors';
 import bodyParser from 'body-parser';
+import userRouter from './src/user.route.js'
+import cors from 'cors';
 
 const app = express();
 
-const corsOptions = {
-  origin: 'https://white-bakana.vercel.app',
-  methods: ['GET', 'POST', 'OPTIONS'],       
-  allowedHeaders: ['Content-Type'],         
-  credentials: true                         
-};
-
-app.use(cors(corsOptions)); 
-
+app.use('/submit-email', userRouter)
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,28 +23,19 @@ try{
   
 }
 
-const emailSchema = new mongoose.Schema({
-  email: { type: String, required: true }
-});
-const Email = mongoose.model('Email', emailSchema);
+const corsOptions = {
+  origin: 'https://white-bakana.vercel.app',  
+  methods: ['GET', 'POST', 'OPTIONS'],        
+  allowedHeaders: ['Content-Type'],           
+  credentials: true                           
+};
 
-app.options('/submit-email', cors(corsOptions));
+app.use(cors(corsOptions));
 
-app.post('/submit-email', (req, res) => {
-  const emailData = new Email({ email: req.body.email });
-  
-  try{
-    emailData.save().then(() => res.send('Email saved successfully!'))
-    
-    } catch(error){
-      console.error('Error saving email:', err);
-      res.status(500).json({ success: false, message: 'Error en el servidor' });
-      if (!res.headersSent) {
-        // Send error response if headers haven't been sent yet
-        return res.status(500).send('Error saving email: ' + err.message);
-      }
-    }
-});
+app.use(express.json());
+
+app.use('/submit-email', userRouter);
+
 
 
 
