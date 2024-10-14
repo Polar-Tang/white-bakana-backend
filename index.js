@@ -25,7 +25,8 @@ try{
 
 const corsOptions = {
   origin: 'https://white-bakana.vercel.app',  
-  methods: ['GET', 'POST', 'OPTIONS'],        
+  methods: ['GET', 'POST', 'OPTIONS'],  
+  Allow: ["OPTIONS", "GET", "HEAD", "POST"],
   allowedHeaders: ['Content-Type'],           
   credentials: true                           
 };
