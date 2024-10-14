@@ -1,15 +1,9 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "/submit-email",
-      "use": "@vercel/node" 
-    }
-  ],
     "routes": [
       {
         "src": "/(.*)", 
-        "dest": "/src/$1",
+        "dest": "/",
          "methods": ["GET", "POST", "OPTIONS"],
          "headers": {
           "Access-Control-Allow-Origin": "*",
