@@ -1,9 +1,7 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/(.*)", "dest": "/" }
-  ],
-  
+    { "src": "/(.*)", "dest": "/" ,
     "headers": [
       {
         "source": "/submit-email", 
@@ -15,6 +13,9 @@
         ]
       }
     ]
+  }
+  ]
+   
   
   
 }
