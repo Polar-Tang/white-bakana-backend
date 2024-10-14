@@ -41,3 +41,14 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+//   ],
+//   "engines": {
+//   "node": "16.x"
+// },
+// "scripts": {
+//   "start": "node --watch index.js",
+//   "test": "echo \"Error: no test specified\" && exit 1"
+// },
+//   "buildCommand": "next build",
+//     "installCommand": "npm install"
