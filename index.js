@@ -5,13 +5,15 @@ import bodyParser from 'body-parser';
 
 const app = express();
 
-app.use(cors({
+const corsOptions = {
   origin: 'https://white-bakana.vercel.app',
-  methods: ['GET', 'POST', 'OPTIONS'],
-  AccessControlAllowOrigin: true,
-  allowedHeaders: ['Content-Type'], 
-  credentials: true,  
-}));
+  methods: ['GET', 'POST', 'OPTIONS'],       
+  allowedHeaders: ['Content-Type'],         
+  credentials: true                         
+};
+
+app.use(cors(corsOptions)); 
+
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,7 +52,8 @@ app.post('/submit-email', cors(corsOptions), (req, res) => {
     }
 });
 
-app.options('/submit-email', cors());
+app.options('/submit-email', cors(corsOptions));
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
