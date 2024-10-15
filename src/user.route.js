@@ -3,12 +3,12 @@ const userRouter = express.Router()
 
 userRouter.post('/', (req, res) => {
   const emailData = new Email({ email: req.body.email });
-  
+  res.header('Access-Control-Allow-Origin', 'https://white-bakana.vercel.app/')
   try{
     emailData.save().then(() => res.send('Email saved successfully!'))
     
     if(res.status(405)){
-      console.log('request', request.headers.get('origin') )
+      alert('request', request.headers.get('origin') )
     }
 
     } catch(err){
