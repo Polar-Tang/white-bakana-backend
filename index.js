@@ -63,7 +63,12 @@ app.post('/ping', async (req, res) => {
 
 mongoose.connect(uri)
 
-const database = mongoose.connection
+const database = mongoose.connection({
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  ssl: true,  // Enable SSL (required by MongoDB Atlas)
+  tlsAllowInvalidCertificates: true,  // Bypass invalid certificate errors (use only for development)
+})
 
 database.once('open', () =>{
     console.log('Conexion exitosa con MONGO DB')
