@@ -5,7 +5,7 @@ import cors from 'cors';
 const app = express();
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 
 app.listen(PORT, () => {
@@ -31,6 +31,7 @@ app.use(cors({
 app.disable('x-powered-by') // deshabilitar el header X-Powered-By: Express
 
 
+
 const uri = 'mongodb+srv://virtualnautilus:sa99L36dYUyE2nY0@cluster0.6lyks.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 const emailSchema = new mongoose.Schema({
@@ -53,7 +54,6 @@ app.post('/ping', async (req, res) => {
     console.log(req.body)
      const emailData = new Email({ email: req.body.email });
      return await emailData.save().then(() => res.send('Email saved successfully!'))
-      res.json("depure")
     } catch(error){       
         console.error('Error saving email:', err);
         // await res.status(500).json({ success: false, message: 'Error en el servidor' });     
