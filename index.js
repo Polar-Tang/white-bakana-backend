@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors'; 
-import userRouter from './src/user.route.js';
 
 const app = express();
 const corsOptions = {
@@ -25,7 +24,30 @@ mongoose.connect(uri)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-app.use('/submit-email', cors(), userRouter); 
+
+  app.post('/submit-email', (req, res) => {
+    const email = req.body.email;
+  
+    res.header('Access-Control-Allow-Origin', 'https://white-bakana.vercel.app/')
+  
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'El email es requerido' });
+    }
+  
+    try{
+      const emailData = new Email({ email });
+      emailData.save()
+      .then(() => res.send('Email saved successfully!'))
+      .catch(err => {
+        console.error('Error guardando el email:', err);
+        res.status(500).json({ success: false, message: 'Error en el servidor al guardar el email' });
+      });
+  
+      } catch(err){
+        console.error('Error saving email:', err);
+        res.status(500).json({ success: false, message: 'Error en el servidor' });
+      }
+  }).build()
 
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 3000;
