@@ -47,7 +47,7 @@ mongoose.connect(uri)
         console.error('Error saving email:', err);
         res.status(500).json({ success: false, message: 'Error en el servidor' });
       }
-  }).build()
+  })
 
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 3000;
@@ -56,6 +56,9 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
+app.get('ping', (req, res) => {
+  res.json('pong')
+})
 
 //   ],
 //   "engines": {
