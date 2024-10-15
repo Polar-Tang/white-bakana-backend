@@ -61,19 +61,15 @@ app.post('/ping', async (req, res) => {
   });
       
 
-mongoose.connect(uri)
-
-const database = mongoose.connection({
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  ssl: true,  // Enable SSL (required by MongoDB Atlas)
-  tlsAllowInvalidCertificates: true,  // Bypass invalid certificate errors (use only for development)
-})
-
-database.once('open', () =>{
-    console.log('Conexion exitosa con MONGO DB')
-})
-
-database.on('error', () =>{
-    console.error('ERROR MONGO DB')
-})
+  mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    ssl: true,  // Enable SSL for MongoDB Atlas
+    tlsAllowInvalidCertificates: true,  // Bypass invalid certificate (only for development)
+  })
+    .then(() => console.log('Connected to MongoDB'))
+    .catch((err) => {
+      console.error('MongoDB connection error:', err);
+      process.exit(1);
+    });
+  
