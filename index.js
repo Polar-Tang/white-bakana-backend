@@ -21,7 +21,7 @@ mongoose.connect(uri)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-app.use('/submit-email', userRouter); 
+app.use('/submit-email', cors(), userRouter); 
 
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 3000;
