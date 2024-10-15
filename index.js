@@ -7,18 +7,28 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
+
 app.listen(PORT, () => {
   console.log(`El servidor se está escuchando en el puerto ${PORT}`);
 });
 
-const corsOptions = {
-  origin: 'https://white-bakana.vercel.app',  
-  methods: ['GET', 'POST', 'OPTIONS'],        
-  allowedHeaders: ['Content-Type'],           
-  credentials: true                           
-};
-app.use(cors(corsOptions));
-app.options('/submit-email', cors(corsOptions));
+app.use(cors({
+  origin: (origin, callback) => {
+    const alloworigins = ["http://127.0.0.1:5500/la/white_bakana/index.html", 'http://127.0.0.1:5500', 'https://white-bakana.vercel.app', 'http://localhost:5500/']
+
+
+    if (alloworigins.includes(origin)) {
+      return callback(null, true)
+    }
+
+    if (!origin) {
+      return callback(null, true)
+    }
+
+    return callback(new Error('Not allowed by CORS'))
+  }
+}))
+app.disable('x-powered-by') // deshabilitar el header X-Powered-By: Express
 
 
 const uri = 'mongodb+srv://virtualnautilus:sa99L36dYUyE2nY0@cluster0.6lyks.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
@@ -37,13 +47,12 @@ app.post('/submit-email', (req,res) => {
 let pong = 'pong'
 
 app.post('/ping', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*')
   
   try{
     console.log(req.body)
-
-    console.log(res.body)
      const emailData = new Email({ email: req.body.email });
-     await emailData.save().then(() => res.send('Email saved successfully!'))
+     return await emailData.save().then(() => res.send('Email saved successfully!'))
       res.json("depure")
     } catch(error){       
         console.error('Error saving email:', err);
