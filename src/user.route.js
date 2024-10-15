@@ -2,14 +2,22 @@ import express from 'express'
 const userRouter = express.Router()
 
 userRouter.post('/', (req, res) => {
-  const emailData = new Email({ email: req.body.email });
+  const email = req.body.email;
+
   res.header('Access-Control-Allow-Origin', 'https://white-bakana.vercel.app/')
+
+  if (!email) {
+    return res.status(400).json({ success: false, message: 'El email es requerido' });
+  }
+
   try{
-    emailData.save().then(() => res.send('Email saved successfully!'))
-    
-    if(res.status(405)){
-      alert('request', request.headers.get('origin') )
-    }
+    const emailData = new Email({ email });
+    emailData.save()
+    .then(() => res.send('Email saved successfully!'))
+    .catch(err => {
+      console.error('Error guardando el email:', err);
+      res.status(500).json({ success: false, message: 'Error en el servidor al guardar el email' });
+    });
 
     } catch(err){
       console.error('Error saving email:', err);
