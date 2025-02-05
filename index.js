@@ -32,7 +32,7 @@ app.disable('x-powered-by') // deshabilitar el header X-Powered-By: Express
 
 
 
-const uri = 'mongodb+srv://virtualnautilus:sa99L36dYUyE2nY0@cluster0.6lyks.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const uri = process.env.MONGO_URI
 
 const emailSchema = new mongoose.Schema({
   email: { type: String, required: true }
