@@ -1,16 +1,16 @@
-import mongoose from 'mongoose';
-import express from 'express';
-import cors from 'cors';
+import mongoose from 'mongoose'
+import express from 'express'
+import cors from 'cors'
 
-const app = express();
-app.use(express.json());
+const app = express()
+app.use(express.json())
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000
 
 
 app.listen(PORT, () => {
-  console.log(`El servidor se está escuchando en el puerto ${PORT}`);
-});
+  console.log(`El servidor se está escuchando en el puerto ${PORT}`)
+})
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -32,12 +32,12 @@ app.disable('x-powered-by') // deshabilitar el header X-Powered-By: Express
 
 
 
-const uri = process.env.MONGO_URI
+const uri = process.env.DATABASE_URL
 
 const emailSchema = new mongoose.Schema({
   email: { type: String, required: true }
-});
-const Email = mongoose.model('Email', emailSchema);
+})
+const Email = mongoose.model('Email', emailSchema)
 
 app.post('/submit-email', (req,res) => {
   res.json("purge")
@@ -52,13 +52,13 @@ app.post('/ping', async (req, res) => {
   
   try{
     console.log(req.body)
-     const emailData = new Email({ email: req.body.email });
+     const emailData = new Email({ email: req.body.email })
      return await emailData.save().then(() => res.send('Email saved successfully!'))
     } catch(error){       
-        console.error('Error saving email:', err);
-        // await res.status(500).json({ success: false, message: 'Error en el servidor' });     
+        console.error('Error saving email:', err)
+        // await res.status(500).json({ success: false, message: 'Error en el servidor' })     
    } 
-  });
+  })
       
 
   mongoose.connect(uri, {
@@ -69,7 +69,7 @@ app.post('/ping', async (req, res) => {
   })
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => {
-      console.error('MongoDB connection error:', err);
-      process.exit(1);
-    });
+      console.error('MongoDB connection error:', err)
+      process.exit(1)
+    })
   
